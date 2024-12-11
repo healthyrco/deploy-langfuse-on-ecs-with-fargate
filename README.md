@@ -69,6 +69,7 @@ For example,
 ```
 
 :information_source: This guide covers Langfuse v2. `image_version` should be set to `2`.
+
 :information_source: `NEXTAUTH_SECRET` and `SALT` can be created using `openssl rand -base64 32` on `MacOS` or `Ubuntu`.
 (For more information, see [**Langfuse Configuring Environment Variables**](https://langfuse.com/docs/deployment/self-host#configuring-environment-variables))
 
