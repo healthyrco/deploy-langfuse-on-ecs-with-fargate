@@ -56,7 +56,7 @@ For example,
   "db_cluster_name": "langfuse-db",
   "ecs_cluster_name": "langfuse-cluster",
   "ecs_service_name": "langfuse-alb-service",
-  "image_version": "latest",
+  "image_version": "2",
   "langfuse_env": {
     "NODE_ENV": "production",
     "NEXTAUTH_SECRET": "mysecret",
@@ -68,6 +68,7 @@ For example,
 }
 ```
 
+:information_source: This guide covers Langfuse v2. `image_version` should be set to `2`.
 :information_source: `NEXTAUTH_SECRET` and `SALT` can be created using `openssl rand -base64 32` on `MacOS` or `Ubuntu`.
 (For more information, see [**Langfuse Configuring Environment Variables**](https://langfuse.com/docs/deployment/self-host#configuring-environment-variables))
 
