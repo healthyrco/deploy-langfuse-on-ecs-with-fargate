@@ -31,7 +31,7 @@ class ECRStack(Stack):
 
     src_docker_image_version = 'ghcr.io/langfuse/langfuse'
     image_version = self.node.try_get_context('image_version') or "2"
-    deploy_image_versions = [image_version] if image_version == "latest" else [image_version, "latest"]
+    deploy_image_versions = ["2", image_version] if image_version == "latest" else [image_version, "latest"]
 
     for i, deploy_image_version in enumerate(deploy_image_versions):
       ecr_deploy.ECRDeployment(self, f"LangFuseECRDeployment-{i:0>3}",
