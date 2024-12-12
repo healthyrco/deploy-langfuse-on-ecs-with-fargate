@@ -1,6 +1,8 @@
 
 # Hosting Langfuse on Amazon ECS with Fargate using CDK Python
 
+> :information_source: This guide covers Langfuse v2. For Langfuse v3, see the [v3 documentation](https://langfuse.com/self-hosting).
+
 ![lanfuse-on-aws-ecs-fargate-arch](./langfuse-on-aws-ecs-fargate-arch.svg)
 
 This repository contains the AWS CDK Python code for deploying the [Langfuse](https://langfuse.com/) application using Amazon Elastic Container Registry (ECR) and Amazon Elastic Container Service (ECS).
