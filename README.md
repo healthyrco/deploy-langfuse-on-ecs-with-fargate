@@ -8,6 +8,7 @@ Langfuse is an open-source LLM engineering platform that helps teams collaborati
 | Project | Architecture |
 |---------|--------------|
 | [langfuse-v2](./langfuse-v2/) | ![lanfuse-v2-arch](./langfuse-v2/langfuse-on-aws-ecs-fargate-arch.svg) |
+| [langfuse-v3](./langfuse-v3/) | ![lanfuse-v3-arch](./langfuse-v3/langfuse-v3-on-aws-ecs-fargate-arch.svg) |
 
 ## References
 
