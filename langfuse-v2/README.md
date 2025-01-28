@@ -21,6 +21,12 @@ you can create the virtualenv manually.
 To manually create a virtualenv on MacOS and Linux:
 
 ```
+$ git clone --depth=1 https://github.com/aws-samples/deploy-langfuse-on-ecs-with-fargate.git
+$ cd deploy-langfuse-on-ecs-with-fargate
+$ git sparse-checkout init --cone
+$ git sparse-checkout set langfuse-v2
+$ cd langfuse-v2
+
 $ python3 -m venv .venv
 ```
 
@@ -127,7 +133,7 @@ Enjoy!
 After deploying all CDK stacks, you can find the **Langfuse URL** using the following command:
 
 ```bash
-aws cloudformation describe-stacks --stack-name LangFuseECSAlbFargateServiceStack | \
+aws cloudformation describe-stacks --stack-name LangFuseECSAlbFargateServiceStack --region ${CDK_DEFAULT_REGION} | \
   jq -r '.Stacks[0].Outputs | map(select(.OutputKey == "LoadBalancerDNS")) | .[0].OutputValue'
 ```
 
@@ -171,7 +177,7 @@ You will also see the details of the selected trace as follows:
 
 ## Security
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+See [CONTRIBUTING](../CONTRIBUTING.md#security-issue-notifications) for more information.
 
 ## License
 
