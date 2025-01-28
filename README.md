@@ -17,7 +17,7 @@ Langfuse is an open-source LLM engineering platform that helps teams collaborati
 
 ## Security
 
-See [CONTRIBUTING](../CONTRIBUTING.md#security-issue-notifications) for more information.
+See [CONTRIBUTING](./CONTRIBUTING.md#security-issue-notifications) for more information.
 
 ## License
 
