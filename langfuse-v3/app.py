@@ -70,7 +70,6 @@ service_discovery_stack.add_dependency(s3_buckets)
 
 ecs_cluster_stack = ECSClusterStack(app, "LangfuseECSClusterStack",
   vpc_stack.vpc,
-  service_discovery_stack.namespace,
   env=AWS_ENV
 )
 ecs_cluster_stack.add_dependency(service_discovery_stack)
