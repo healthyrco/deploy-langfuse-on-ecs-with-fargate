@@ -14,7 +14,7 @@ from constructs import Construct
 
 class ECSClusterStack(Stack):
 
-  def __init__(self, scope: Construct, construct_id: str, vpc, service_discovery_namespace, **kwargs) -> None:
+  def __init__(self, scope: Construct, construct_id: str, vpc, **kwargs) -> None:
 
     super().__init__(scope, construct_id, **kwargs)
 
