@@ -223,6 +223,7 @@ You will also see the details of the selected trace as follows:
 
 #### Langfuse User Guide
 
+  * [(Workshop) GenAIOps - Observability for GenAI applications with Amazon Bedrock and Langfuse](https://catalog.workshops.aws/genaiops-langfuse)
   * [Get Started with Langfuse Tracing](https://langfuse.com/docs/get-started)
   * [Observability & Tracing for Langchain (Python & JS/TS)](https://langfuse.com/docs/integrations/langchain/tracing)
 
