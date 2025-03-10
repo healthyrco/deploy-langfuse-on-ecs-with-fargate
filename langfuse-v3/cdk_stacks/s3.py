@@ -24,12 +24,12 @@ class S3BucketStack(Stack):
     S3_BUCKET_SUFFIX = ''.join(random.sample((string.ascii_lowercase + string.digits), k=7))
 
     self.blob_bucket = s3.Bucket(self, "BlobBucket",
-      bucket_name=f'langfuse-blob-{cdk.Aws.REGION}-{S3_BUCKET_SUFFIX}',
+      bucket_name=f'langfuse-blob-{cdk.Aws.REGION}-{cdk.Aws.ACCOUNT_ID}-{S3_BUCKET_SUFFIX}',
       removal_policy=cdk.RemovalPolicy.DESTROY, #XXX: Default: core.RemovalPolicy.RETAIN - The bucket will be orphaned
       auto_delete_objects=True)
 
     self.event_bucket = s3.Bucket(self, "EventBucket",
-      bucket_name=f'langfuse-event-{cdk.Aws.REGION}-{S3_BUCKET_SUFFIX}',
+      bucket_name=f'langfuse-event-{cdk.Aws.REGION}-{cdk.Aws.ACCOUNT_ID}-{S3_BUCKET_SUFFIX}',
       removal_policy=cdk.RemovalPolicy.DESTROY, #XXX: Default: core.RemovalPolicy.RETAIN - The bucket will be orphaned
       auto_delete_objects=True)
 
