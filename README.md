@@ -14,6 +14,7 @@ Langfuse is an open-source LLM engineering platform that helps teams collaborati
 
  * [(Official) Self-host Langfuse Guide](https://langfuse.com/self-hosting)
  * [(GitHub) langfuse](https://github.com/langfuse/langfuse/)
+ * [(GitHub) langfuse-examples](https://github.com/langfuse/langfuse-examples)
  * [AWS CDK Reference Documentation](https://docs.aws.amazon.com/cdk/api/v2/)
 
 ## Security
