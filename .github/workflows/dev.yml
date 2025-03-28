@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    # environment: development
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::876581797419:role/github-actions
+          aws-region: us-west-2
+          role-session-name: github-actions
