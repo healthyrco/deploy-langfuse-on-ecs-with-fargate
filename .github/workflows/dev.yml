@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Langfuse
 
 on:
   pull_request:
@@ -10,13 +10,51 @@ permissions:
 
 jobs:
   deploy:
-    name: deploy
+    name: Deploy Langfuse on AWS
     runs-on: ubuntu-latest
-    # environment: development
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::876581797419:role/github-actions
           aws-region: us-west-2
           role-session-name: github-actions
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install AWS CDK CLI
+        run: npm install -g aws-cdk
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Create Virtual Environment & Install Dependencies
+        working-directory: langfuse-v3
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Bootstrap CDK App
+        working-directory: langfuse-v3
+        run: |
+          source .venv/bin/activate
+          export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+          export CDK_DEFAULT_REGION=$(aws configure get region)
+          cdk bootstrap
+
+      - name: Deploy CDK Stacks
+        working-directory: langfuse-v3
+        run: |
+          source .venv/bin/activate
+          export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+          export CDK_DEFAULT_REGION=$(aws configure get region)
+          cdk deploy --require-approval never --all
