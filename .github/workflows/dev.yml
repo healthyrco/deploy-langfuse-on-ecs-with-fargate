@@ -51,10 +51,6 @@ jobs:
           name: "langfuse-v3/cdk.context.json"
           json: ${{ secrets.CDK_CONTEXT_JSON }}
 
-      - name: Verify context file exists
-        working-directory: langfuse-v3
-        run: ls -al cdk.context.json
-
       - name: Delete existing CDKToolkit Stack (if any)
         run: |
           aws cloudformation describe-stacks --stack-name CDKToolkit --region us-west-2 || echo "Stack not found"
