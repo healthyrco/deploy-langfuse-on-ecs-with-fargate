@@ -2,22 +2,20 @@ name: Get Langfuse URL
 
 on:
   workflow_dispatch:
-    inputs:
-      region:
-        description: "AWS Region"
-        required: true
-        default: "us-west-2"
 
 jobs:
   get-url:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          aws-region: ${{ github.event.inputs.region }}
           role-to-assume: arn:aws:iam::876581797419:role/github-actions
-          role-session-name: "get-lb-url"
+          aws-region: us-west-2
+          role-session-name: github-actions
 
       - name: Get Load Balancer URL
         id: geturl
