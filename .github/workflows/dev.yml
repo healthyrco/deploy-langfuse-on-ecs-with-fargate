@@ -55,6 +55,12 @@ jobs:
         working-directory: langfuse-v3
         run: ls -al cdk.context.json
 
+      - name: Delete existing CDKToolkit Stack (if any)
+        run: |
+          aws cloudformation describe-stacks --stack-name CDKToolkit --region us-west-2 || echo "Stack not found"
+          aws cloudformation delete-stack --stack-name CDKToolkit --region us-west-2 || echo "Deletion command failed"
+          aws cloudformation wait stack-delete-complete --stack-name CDKToolkit --region us-west-2 || echo "Wait timed out"
+
       - name: Bootstrap CDK App
         working-directory: langfuse-v3
         run: |
