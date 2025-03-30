@@ -53,6 +53,10 @@ jobs:
         working-directory: langfuse-v3
         run: ls -al cdk.context.json
 
+      - name: Print cdk.context.json for inspection
+        working-directory: langfuse-v3
+        run: cat cdk.context.json
+
       - name: Bootstrap CDK App
         working-directory: langfuse-v3
         run: |
