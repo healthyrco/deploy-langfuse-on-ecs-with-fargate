@@ -44,6 +44,10 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Verify context file exists
+        working-directory: langfuse-v3
+        run: ls -al cdk.context.json
+
       - name: Bootstrap CDK App
         working-directory: langfuse-v3
         run: |
