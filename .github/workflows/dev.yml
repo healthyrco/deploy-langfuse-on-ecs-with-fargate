@@ -45,17 +45,15 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Create cdk.context.json file from secret
-        working-directory: langfuse-v3
-        run: printf '%s\n' "${{ secrets.CDK_CONTEXT_JSON }}" > cdk.context.json
+      - name: Create cdk.context.json from secret
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "langfuse-v3/cdk.context.json"
+          json: ${{ secrets.CDK_CONTEXT_JSON }}
 
       - name: Verify context file exists
         working-directory: langfuse-v3
         run: ls -al cdk.context.json
-
-      - name: Print cdk.context.json for inspection
-        working-directory: langfuse-v3
-        run: cat cdk.context.json
 
       - name: Bootstrap CDK App
         working-directory: langfuse-v3
