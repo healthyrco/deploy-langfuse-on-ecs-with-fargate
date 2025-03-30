@@ -1,0 +1,31 @@
+name: Get Langfuse URL
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "AWS Region"
+        required: true
+        default: "us-west-2"
+
+jobs:
+  get-url:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-region: ${{ github.event.inputs.region }}
+          role-to-assume: arn:aws:iam::876581797419:role/github-actions
+          role-session-name: "get-lb-url"
+
+      - name: Get Load Balancer URL
+        id: geturl
+        run: |
+          LB_URL=$(aws cloudformation describe-stacks --stack-name LangfuseWebECSServiceStack --region ${{ github.event.inputs.region }} | jq -r '.Stacks[0].Outputs | map(select(.OutputKey == "LoadBalancerDNS")) | .[0].OutputValue')
+          echo "Load Balancer URL: $LB_URL"
+          # Using the new output mechanism:
+          echo "lb_url=$LB_URL" >> $GITHUB_OUTPUT
+
+      - name: Display URL
+        run: echo "The Langfuse URL is ${{ steps.geturl.outputs.lb_url }}"
