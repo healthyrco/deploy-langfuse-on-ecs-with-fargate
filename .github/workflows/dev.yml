@@ -47,7 +47,7 @@ jobs:
 
       - name: Create cdk.context.json file from secret
         working-directory: langfuse-v3
-        run: echo "${{ secrets.CDK_CONTEXT_JSON }}" > cdk.context.json
+        run: printf '%s\n' "${{ secrets.CDK_CONTEXT_JSON }}" > cdk.context.json
 
       - name: Verify context file exists
         working-directory: langfuse-v3
