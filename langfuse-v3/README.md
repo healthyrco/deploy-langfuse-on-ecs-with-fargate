@@ -1,4 +1,3 @@
-
 # Hosting Langfuse V3 on Amazon ECS with Fargate using CDK Python
 
 This repository contains the AWS CDK Python code for deploying the [Langfuse](https://langfuse.com/) application using Amazon Elastic Container Registry (ECR) and Amazon Elastic Container Service (ECS).
@@ -55,12 +54,17 @@ command.
 
 **Set up `cdk.context.json`**
 
-Then, we need to set approperly the cdk context configuration file, `cdk.context.json`.
+First, you need to properly set the CDK context configuration file, `cdk.context.json`. You can copy the `.example.cdk.context.json` file as a starting point.
 
-For example,
+**Important:** This deployment now configures the Application Load Balancer (ALB) to use **HTTPS only**. Therefore, you must:
+1.  Have an existing ACM (AWS Certificate Manager) certificate in the same AWS region where you plan to deploy. This certificate should ideally cover the custom domain you intend to use, although for initial testing without a custom domain, you might need to create a certificate for a domain you own and manually point DNS later (this setup doesn't configure Route 53).
+2.  Add the ARN (Amazon Resource Name) of this certificate to your `cdk.context.json` file under the key `"acm_cert_arn"`.
 
-```
+Example `cdk.context.json` structure:
+
+```json
 {
+  "acm_cert_arn": "arn:aws:acm:us-west-2:123456789012:certificate/your-certificate-id", // <-- Replace with your actual ACM certificate ARN
   "private_dns_namespace_name": "langfuse.local",
   "db_cluster_name": "langfuse-db",
   "ecr": [
@@ -177,14 +181,15 @@ Enjoy!
 
 ## Tracing for your LLM Application with Langfuse
 
-After deploying all CDK stacks, you can find the **Langfuse URL** using the following command:
+After deploying all CDK stacks, you can find the **Langfuse HTTPS URL** using the following command:
 
 ```bash
-aws cloudformation describe-stacks --stack-name LangfuseWebECSServiceStack --region ${CDK_DEFAULT_REGION} | \
+aws cloudformation describe-stacks --stack-name LangfuseWebALBStack --region ${CDK_DEFAULT_REGION} | \
   jq -r '.Stacks[0].Outputs | map(select(.OutputKey == "LoadBalancerDNS")) | .[0].OutputValue'
 ```
+*(Note: The command above retrieves the output from the `LangfuseWebALBStack` which now exports the HTTPS URL).*
 
-Next, open the **Langfuse URL** in your browser to create a new project for tracking your LLM application with Langfuse.
+Next, open the **Langfuse HTTPS URL** in your browser to create a new project for tracking your LLM application with Langfuse.
 
 ### Create a New Project in Langfuse
 

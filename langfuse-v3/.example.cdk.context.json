@@ -1,4 +1,5 @@
 {
+  "acm_cert_arn": "arn:aws:acm:YOUR_REGION:YOUR_ACCOUNT_ID:certificate/YOUR_CERTIFICATE_ID",
   "private_dns_namespace_name": "langfuse.local",
   "db_cluster_name": "langfuse-db",
   "ecr": [
