@@ -1,9 +1,12 @@
-name: Deploy Langfuse
+name: Destroy Langfuse
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize, edited]
   workflow_dispatch:
+    inputs:
+      region:
+        description: "AWS Region"
+        required: false
+        default: "us-west-2"
 
 permissions:
   id-token: write
@@ -11,7 +14,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy Langfuse on AWS
+    name: Destroy Langfuse on AWS
     environment: development
     runs-on: ubuntu-latest
     steps:
