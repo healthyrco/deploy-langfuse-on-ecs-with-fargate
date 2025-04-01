@@ -13,7 +13,8 @@ permissions:
   contents: read
 
 jobs:
-  destroy-langfuse:
+  destroy:
+    name: Destroy Langfuse Deployment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -26,5 +27,33 @@ jobs:
           aws-region: ${{ github.event.inputs.region }}
           role-session-name: github-actions
 
-      - name: CDK Destroy Langfuse
-        run: npx cdk destroy --force --require-approval never
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Create Virtual Environment & Install Dependencies
+        working-directory: langfuse-v3
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Create cdk.context.json from secret
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "langfuse-v3/cdk.context.json"
+          json: ${{ secrets.CDK_CONTEXT_JSON }}
+
+      - name: Destroy CDK Stacks
+        working-directory: langfuse-v3
+        run: |
+          source .venv/bin/activate
+          export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+          export CDK_DEFAULT_REGION=$(aws configure get region)
+          npx cdk destroy --all --force --require-approval never
