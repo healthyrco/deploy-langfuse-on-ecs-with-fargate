@@ -1,8 +1,6 @@
 name: Deploy Langfuse
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize, edited]
   workflow_dispatch:
 
 permissions:
