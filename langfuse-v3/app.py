@@ -29,7 +29,13 @@ AWS_ENV = cdk.Environment(
   region=os.environ["CDK_DEFAULT_REGION"]
 )
 
-app = cdk.App()
+aapp = cdk.App()
+
+# *** Get ACM certificate ARN from context ***
+# Make sure to set this value in cdk.context.json or via --context flag
+acm_cert_arn = app.node.try_get_context("acm_cert_arn")
+if not acm_cert_arn:
+  raise ValueError("ACM certificate ARN must be provided in CDK context (acm_cert_arn)")
 
 ecr_stack = ECRStack(app, "LangfuseECRStack",
   env=AWS_ENV

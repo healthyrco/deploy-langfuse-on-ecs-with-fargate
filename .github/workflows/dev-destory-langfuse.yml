@@ -1,0 +1,38 @@
+name: Destroy Langfuse
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "AWS Region"
+        required: false
+        default: "us-west-2"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  destroy-langfuse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::876581797419:role/github-actions
+          aws-region: ${{ github.event.inputs.region }}
+          role-session-name: github-actions
+
+      - name: CDK Destroy Langfuse
+        run: npx cdk destroy --force --require-approval never
