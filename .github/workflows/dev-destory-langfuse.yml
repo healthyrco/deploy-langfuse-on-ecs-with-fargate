@@ -1,20 +1,18 @@
-name: Destroy Langfuse
+name: Deploy Langfuse
 
 on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
   workflow_dispatch:
-    inputs:
-      region:
-        description: "AWS Region"
-        required: false
-        default: "us-west-2"
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  destroy:
-    name: Destroy Langfuse Deployment
+  deploy:
+    name: Deploy Langfuse on AWS
+    environment: development
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -24,13 +22,16 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::876581797419:role/github-actions
-          aws-region: ${{ github.event.inputs.region }}
+          aws-region: us-west-2
           role-session-name: github-actions
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+
+      - name: Install AWS CDK CLI
+        run: npm install -g aws-cdk
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -50,10 +51,18 @@ jobs:
           name: "langfuse-v3/cdk.context.json"
           json: ${{ secrets.CDK_CONTEXT_JSON }}
 
+      # - name: Bootstrap CDK App
+      #   working-directory: langfuse-v3
+      #   run: |
+      #     source .venv/bin/activate
+      #     export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+      #     export CDK_DEFAULT_REGION=$(aws configure get region)
+      #     cdk bootstrap --force
+
       - name: Destroy CDK Stacks
         working-directory: langfuse-v3
         run: |
           source .venv/bin/activate
           export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
           export CDK_DEFAULT_REGION=$(aws configure get region)
-          npx cdk destroy --all --force --require-approval never
+          cdk destroy --all --force --require-approval never
