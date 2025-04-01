@@ -29,7 +29,7 @@ AWS_ENV = cdk.Environment(
   region=os.environ["CDK_DEFAULT_REGION"]
 )
 
-aapp = cdk.App()
+app = cdk.App()
 
 # *** Get ACM certificate ARN from context ***
 # Make sure to set this value in cdk.context.json or via --context flag
