@@ -10,7 +10,7 @@ permissions:
 jobs:
   deploy:
     name: Deploy Langfuse on AWS
-    environment: development
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -19,7 +19,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::876581797419:role/github-actions
+          role-to-assume: arn:aws:iam::655155604972:role/github-actions
           aws-region: us-west-2
           role-session-name: github-actions
 
