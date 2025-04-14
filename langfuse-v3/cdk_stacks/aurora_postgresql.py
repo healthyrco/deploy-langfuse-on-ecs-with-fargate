@@ -113,7 +113,8 @@ class AuroraPostgresqlStack(Stack):
       ),
       security_groups=[sg_postgresql_server],
       vpc=vpc,
-      vpc_subnets=aws_ec2.SubnetSelection(subnet_type=aws_ec2.SubnetType.PRIVATE_WITH_EGRESS)
+      vpc_subnets=aws_ec2.SubnetSelection(subnet_type=aws_ec2.SubnetType.PRIVATE_WITH_EGRESS),
+      storage_encrypted=True,  # Enable encryption at rest
     )
 
     self.sg_rds_client = sg_postgresql_client
