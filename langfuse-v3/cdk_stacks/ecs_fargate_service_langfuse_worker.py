@@ -32,9 +32,14 @@ class ECSFargateServiceLangfuseWorkerStack(Stack):
       description="Allow inbound from VPC for ECS Fargate Service",
       security_group_name=f'{self.stack_name.lower()}-langfuse-worker-sg'
     )
-    sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4("0.0.0.0/0"),
-      connection=aws_ec2.Port.all_tcp(),
-      description='langfuse-worker')
+    # remove public ingress
+    # sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4("0.0.0.0/0"),
+    #   connection=aws_ec2.Port.all_tcp(),
+    #   description='langfuse-worker')
+    # allow metrics endpoint only from inside VPC
+    sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4(vpc.vpc_cidr_block),
+      connection=aws_ec2.Port.tcp(3030),
+      description='langfuse‑worker metrics')
     cdk.Tags.of(sg_fargate_service).add('Name', 'langfuse-worker-sg')
 
     worker_desired_count = self.node.try_get_context('langfuse_worker_desired_count') or 1
