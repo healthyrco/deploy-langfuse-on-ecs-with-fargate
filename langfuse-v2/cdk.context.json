@@ -9,6 +9,10 @@
     "SALT": "salt (generate by running 'openssl rand -base64 32')",
     "TELEMETRY_ENABLED": "true",
     "NEXT_PUBLIC_SIGN_UP_DISABLED": "false",
-    "LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES": "true"
+    "LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES": "true",
+    "NEXTAUTH_URL": "https://langfuse.healthyr.com"
+  },
+  "langfuse_web_env": {
+    "NEXTAUTH_URL": "https://langfuse.healthyr.com"
   }
 }
