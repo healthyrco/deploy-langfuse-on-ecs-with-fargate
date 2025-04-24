@@ -40,7 +40,7 @@ class ECSFargateServiceLangfuseWebStack(Stack):
     #   description='langfuse-web')
     sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4(vpc.vpc_cidr_block),
       connection=aws_ec2.Port.tcp(3000),
-      description='langfuse‑web from ALB / VPC')
+      description='langfuse-web-from-ALB-VPC')
     cdk.Tags.of(sg_fargate_service).add('Name', 'langfuse-web-sg')
 
     self.fargate_service = aws_ecs.FargateService(self, "FargateService",
