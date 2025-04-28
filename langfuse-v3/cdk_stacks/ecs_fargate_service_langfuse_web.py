@@ -34,9 +34,13 @@ class ECSFargateServiceLangfuseWebStack(Stack):
       description="Allow inbound from VPC for ECS Fargate Service",
       security_group_name=f'{self.stack_name.lower()}-langfuse-web-sg'
     )
-    sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4("0.0.0.0/0"),
+    # remove public ingress
+    # sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4("0.0.0.0/0"),
+    #   connection=aws_ec2.Port.tcp(3000),
+    #   description='langfuse-web')
+    sg_fargate_service.add_ingress_rule(peer=aws_ec2.Peer.ipv4(vpc.vpc_cidr_block),
       connection=aws_ec2.Port.tcp(3000),
-      description='langfuse-web')
+      description='langfuse-web-from-ALB-VPC')
     cdk.Tags.of(sg_fargate_service).add('Name', 'langfuse-web-sg')
 
     self.fargate_service = aws_ecs.FargateService(self, "FargateService",

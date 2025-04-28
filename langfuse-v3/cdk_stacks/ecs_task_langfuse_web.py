@@ -104,7 +104,7 @@ class ECSTaskLangfuseWebStack(Stack):
       # "LANGFUSE_S3_MEDIA_UPLOAD_PREFIX": "media/", # default: "" (the bucket root)
       "LANGFUSE_S3_MEDIA_UPLOAD_ENABLED": "true",
 
-      "NEXTAUTH_URL": load_balancer_url,
+      # "NEXTAUTH_URL": load_balancer_url, // Commented out as it is now using the custom domain from the cdk.context.json
     }
 
     repository = ecr_repositories['langfuse-web']

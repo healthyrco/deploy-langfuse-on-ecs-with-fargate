@@ -68,7 +68,7 @@ class ECSTaskStack(Stack):
     docker_run_args = self.node.try_get_context('langfuse_env')
     task_env = {
       **docker_run_args,
-      "NEXTAUTH_URL": load_balancer_url,
+      # "NEXTAUTH_URL": load_balancer_url, // Commented out as it is now using the custom domain from the cdk.context.json
       "DATABASE_URL": DATABASE_URL
     }
 
